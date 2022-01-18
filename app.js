@@ -221,7 +221,7 @@ app.post("/showclass",function(req,res)
         console.log(count);
         if(count==2)
         {
-            res.send("class not available");
+            res.send("class not available at"+RailWayTime);
 
         }
 
