@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <title>Join class</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <link rel='stylesheet' type='text/css' media='screen' href='main.css'>
+    <script src='main.js'></script>
+</head>
+<body>
+    <h1 style="text-align: center;font: italic bold 35px/35px Georgia, serif;">Enroll Now</h1><br><hr>
+    <div style="text-align: center;padding: 30px;">
+        <form method="post" action="/addclass">
+            <input type="hidden" name="id" value="<%=userid%>">
+            <label style="text-align: center;font: italic bold 20px/30px Georgia, serif;">Enter Code to join</label>
+            <input type="text" name="joincode" class="form-control form-control-lg" placeholder="Enter code to join"><br><br>
+            <button type="submit" class="btn btn-success">Join</button>
+        </form>
+    </div>
+   
+    
+</body>
+</html>

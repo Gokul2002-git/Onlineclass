@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Show class</title>
+    <link rel="stylesheet" href= 
+    "https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"> 
+            
+        <script src= 
+    "https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"> 
+        </script> 
+            
+        <script src= 
+    "https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"> 
+        </script> 
+            
+        <script src= 
+    "https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"> 
+        </script> 
+          
+        <style type="text/css">
+            h1 {
+                color:green;
+            }
+            .xyz {
+                background-size: auto;
+                text-align: center;
+                padding-top: 100px;
+            }
+            .btn-circle.btn-sm {
+                width: 30px;
+                height: 30px;
+                padding: 6px 0px;
+                border-radius: 15px;
+                font-size: 8px;
+                text-align: center;
+            }
+            .btn-circle.btn-md {
+                width: 50px;
+                height: 50px;
+                padding: 7px 10px;
+                border-radius: 25px;
+                font-size: 10px;
+                text-align: center;
+            }
+            .btn-circle.btn-xl {
+                width: 70px;
+                height: 70px;
+                padding: 10px 16px;
+                border-radius: 35px;
+                font-size: 12px;
+                text-align: center;
+            }
+        </style>
+</head>
+<body>
+   <br> <div style="text-align: center;" class="col-md-12">
+    <form action="/showclass" method="post">
+        <button type="submit" class="btn btn-danger btn-circle btn-xl" name="id" value="<%=classdetails[0]._id%>">Join</button>
+    </form>
+       
+    </div><hr>
+<div class="col-md-12">
+    <%  for(var i=0;i<classdetails.length;i++){%>
+        <h1>host by<%=classdetails[0].name%></h1>
+        <h1><%=classdetails[0].year%></h1>
+        <h1><%=classdetails[0].college%></h1>
+        <h1><%=classdetails[0].section%></h1>
+        
+    <%}%>
+    <h1><%=perioddetail%></h1>
+    <%perioddetail.forEach(function(name){%>
+        <h2><%=name.day%></h2>
+        <h2><%=name.period%></h2>
+        <h2><%=name.starttime%></h2>
+        <h2><%=name.endtime%></h2>
+        <h2><%=name.link%></h2><hr>
+
+    <%});%>
+
+  
+
+    <br><hr>
+</div>
+  
+   
+    
+   
+</body>
+</html>
