@@ -48,9 +48,9 @@ module.exports.getRailwayTime=getRailwayTime;
 function getRailwayTime()
 {
     var today=new Date();
-    var currdate=today.toLocaleTimeString('en-In', {hour12:false, hour: '2-digit', minute: '2-digit' });
+    var currdate=today.toLocaleTimeString("en-In", {hour12:false, hour: '2-digit', minute: '2-digit' });
    // console.log(currdate);
-  
+
     return currdate;
 
 }   
