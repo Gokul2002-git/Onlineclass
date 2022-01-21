@@ -47,18 +47,18 @@ function getTime()
 module.exports.getRailwayTime=getRailwayTime; 
 function getRailwayTime()
 {
-    var today=new Date();
-    var currdate=today.toLocaleTimeString("en-In", {hour12:false, hour: '2-digit', minute: '2-digit' });
+    // var today=new Date();
+    // var currdate=today.toLocaleTimeString("en-In", {hour12:false, hour: '2-digit', minute: '2-digit' });
    // console.log(currdate);
 // var dateUTC = new Date();
 // var dateUTC = dateUTC.getTime() 
 
 
-// var dateIST = new Date();
-// //date shifting for IST timezone (+5 hours and 30 minutes)
-// dateIST.setHours(dateIST.getHours() + 5); 
-// dateIST.setMinutes(dateIST.getMinutes() + 30);
-// var currdate=dateIST.toLocaleTimeString([], {hour12:false, hour: '2-digit', minute: '2-digit' });
+var dateIST = new Date();
+//date shifting for IST timezone (+5 hours and 30 minutes)
+dateIST.setHours(dateIST.getHours() + 5); 
+dateIST.setMinutes(dateIST.getMinutes() + 30);
+var currdate=dateIST.toLocaleTimeString([], {hour12:false, hour: '2-digit', minute: '2-digit' });
 return currdate;
 
 }   
