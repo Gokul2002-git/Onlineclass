@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Create class</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+</head>
+<body>
+
+<div class="container">
+  <form method="post" action="/adminadd">
+  <h2>Class Details</h2>
+  <label >Enter College/School Name</label><br>
+  <input class="form-control form-control-lg" type="text" placeholder="Enter college/School Name" name="clgname"><br>
+  <label >Enter Year/Standard</label><br>
+  <input class="form-control form-control-lg" type="text" placeholder="Enter Year/Standard" name="year"> <br> 
+  <label >Enter Section</label><br>
+  <input class="form-control form-control-lg" type="text" placeholder="Enter Section" name="section"> <br>   
+  <h2>Create Class</h2>
+  <table class="table table-bordered">
+        <thead>
+            <tr>
+              
+              <th>Classes</th>
+              <th>Monday</th>
+              <th>Tuesday</th>
+              <th>Wednesday</th>
+              <th>Thursday</th>
+              <th>Friday</th>
+              <th>Saturday</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+      
+              <td>
+                <select class="form-control form-control-lg" name="class">
+                  <option>Period 1</option>
+                  <option>Period 2</option>
+                  <option>Peroid 3</option>
+                  <option>Peroid 4</option>
+                  <option>Peroid 5</option>
+                  <option>Peroid 6</option>
+                  <option>Peroid 7</option>
+                  <option>Peroid 8</option>
+                  <option>Peroid 9</option>
+                  <option>Peroid 10</option>
+                  
+                </select>
+                <hr>
+                <input class="form-control form-control-lg" type="text" placeholder="starttime" name="starttime"><br>
+                <input class="form-control form-control-lg" type="text" placeholder="endtime" name="endtime">
+              </td>
+             
+              <td><input class="form-control form-control-lg" type="text" placeholder="period" name="class1"><br>
+                  <input class="form-control form-control-lg" type="text" placeholder="class link" name="link1">
+                  <input type="hidden" name="day1" value="Monday">
+              </td>
+              <td><input class="form-control form-control-lg" type="text" placeholder="period" name="class2"><br>
+                  <input class="form-control form-control-lg" type="text" placeholder="class link" name="link2">
+                  <input type="hidden" name="day2" value="Tuesday">
+              </td>
+              <td><input class="form-control form-control-lg" type="text" placeholder="period"  name="class3"><br>
+                  <input class="form-control form-control-lg" type="text" placeholder="class link" name="link3">
+                  <input type="hidden" name="day3" value="Wednesday">
+              </td>
+              <td><input class="form-control form-control-lg" type="text" placeholder="period" name="class4"><br>
+                  <input class="form-control form-control-lg" type="text" placeholder="class link" name="link4">
+                  <input type="hidden" name="day4" value="Thursday">
+              </td>
+              <td><input class="form-control form-control-lg" type="text" placeholder="period" name="class5"><br>
+                  <input class="form-control form-control-lg" type="text" placeholder="class link" name="link5">
+                  <input type="hidden" name="day5" value="Friday">
+              </td>
+              <td><input class="form-control form-control-lg" type="text" placeholder="period" name="class6"><br>
+                  <input class="form-control form-control-lg" type="text" placeholder="class link" name="link6">
+                  <input type="hidden" name="day6" value="Saturday">
+              </td>
+              
+           
+      
+            </tr>
+          </tbody>
+        </table>
+        <input type="hidden" name="name" value="<%=detail[0].name%>">
+        <input type="hidden" name="mail" value="<%=detail[0].mail%>">
+          <td><button type="submit" class="btn btn-success">Create</button></td>
+      </form>
+   
+ 
+
+</div>
+
+</body>
+</html>

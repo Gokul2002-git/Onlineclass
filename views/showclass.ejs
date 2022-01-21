@@ -56,31 +56,56 @@
         </style>
 </head>
 <body>
-   <br> <div style="text-align: center;" class="col-md-12">
+<br>
+    
+    <div style="text-align: center;" class="container">
+        <form action="/leaveclass" method="post">
+            <h2><%=classdetails[0].college%></h2>
+        <h2><%=classdetails[0].year%>-<%=classdetails[0].section%></h2>
+    </div>
+    <hr>
+    <div style="text-align: center;" class="container">
+        <form action="/leaveclass" method="post">
+        <button type="submit" class="btn btn-danger" name="mail" value="<%=mail%>" style="margin-right: 100px;">Leave Class</button><button class="btn btn-success" "><a href="/" style="text-decoration: none;color: white;">Logout</a></button>
+    </form>  
+    </div>
+      <hr>
+   <br> <div style="text-align: center;" class="col-md-12" class="container">
     <form action="/showclass" method="post">
-        <button type="submit" class="btn btn-danger btn-circle btn-xl" name="id" value="<%=classdetails[0]._id%>">Join</button>
+        <button type="submit" class="btn btn-primary btn-circle btn-xl" name="id" value="<%=classdetails[0]._id%>">Join</button>
     </form>
        
     </div><hr>
-<div class="col-md-12">
-    <%  for(var i=0;i<classdetails.length;i++){%>
-        <h1>host by<%=classdetails[0].name%></h1>
-        <h1><%=classdetails[0].year%></h1>
-        <h1><%=classdetails[0].college%></h1>
-        <h1><%=classdetails[0].section%></h1>
-        
-    <%}%>
-    <h1><%=perioddetail%></h1>
-    <%perioddetail.forEach(function(name){%>
-        <h2><%=name.day%></h2>
-        <h2><%=name.period%></h2>
-        <h2><%=name.starttime%></h2>
-        <h2><%=name.endtime%></h2>
-        <h2><%=name.link%></h2><hr>
-
-    <%});%>
-
   
+    <div class="container" style="overflow-x:auto;">
+        <h2>Today Classes</h2>      
+        <table class="table table-bordered">
+              <thead>
+                  <tr>
+                    <th>Day</th>
+                    <th>Class No</th>
+                    <th>Starttime-Endtime</th>
+                    <th>Class</th>
+                    <th>Link</th>
+                  </tr>
+                 
+                </thead>
+                <tbody>
+                    
+                   <% perioddetail.forEach(function(name){%>
+                    <%if(name.day===today){%>
+                    <tr>
+        <td><%=name.day%></td> 
+        <td><%=name.periodnumber%></td>  
+        <td><%=name.starttime%>-<%=name.endtime%></td>
+        <td><%=name.period%></td>  
+        <td><%=name.link%></td>
+                  </tr>
+                <%}%>
+                <%});%>
+                </tbody>
+      
+            </div>
 
     <br><hr>
 </div>

@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Admin Main class</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+</head>
+<body>
+  <div class="col-md-12" style="text-align: center;">
+    <h2 >Your Class Code</h2>
+      <h2><%=detail[0]._id%></h2>
+      <hr>
+  </div>
+  
+<div class="col-md-12" style="text-align: center;">
+    <form action="/deleteclass" method="post">
+        <button type="submit" class="btn btn-success" style="margin-right: 100px;"><a href="/adminlogin" style="text-decoration: none;color: white;">Logout</a></button>
+        <button class="btn btn-danger" type="submit">Delete Class</button><hr>
+        <input type="hidden" name="deleteid" value="<%=detail[0]._id%>">
+        <input type="hidden" name="mailid" value="<%=detail[0].mail%>">
+    </form>
+</div>
+
+<div class="container" style="overflow-x:auto;">
+  <h2>Create Class</h2>
+  <p></p>            
+  <table class="table table-bordered" >
+      <form method="post" action="/adminupdate">
+        <thead>
+            <tr>
+              
+              <th>Classes</th>
+              <th>Monday</th>
+              <th>Tuesday</th>
+              <th>Wednesday</th>
+              <th>Thursday</th>
+              <th>Friday</th>
+              <th>Saturday</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+      
+              <td>
+                <select class="form-control form-control-lg" name="class">
+                    <option>Period 1</option>
+                    <option>Peroid 2</option>
+                    <option>Peroid 3</option>
+                    <option>Peroid 4</option>
+                    <option>Peroid 5</option>
+                    <option>Peroid 6</option>
+                    <option>Peroid 7</option>
+                    <option>Peroid 8</option>
+                    <option>Period 9</option>
+                    <option>Period 10</option>
+                    
+                  </select><hr>
+                <input class="form-control form-control-lg" type="text" placeholder="starttime" name="starttime"><br>
+                <input class="form-control form-control-lg" type="text" placeholder="endtime" name="endtime">
+              </td>
+             
+              <td><input class="form-control form-control-lg" type="text" placeholder="period" name="class1"><br>
+                  <input class="form-control form-control-lg" type="text" placeholder="class link" name="link1">
+                  <input type="hidden" name="day1" value="Monday">
+              </td>
+              <td><input class="form-control form-control-lg" type="text" placeholder="period" name="class2"><br>
+                  <input class="form-control form-control-lg" type="text" placeholder="class link" name="link2">
+                  <input type="hidden" name="day2" value="Tuesday">
+              </td>
+              <td><input class="form-control form-control-lg" type="text" placeholder="period"  name="class3"><br>
+                  <input class="form-control form-control-lg" type="text" placeholder="class link" name="link3">
+                  <input type="hidden" name="day3" value="Wednesday">
+              </td>
+              <td><input class="form-control form-control-lg" type="text" placeholder="period" name="class4"><br>
+                  <input class="form-control form-control-lg" type="text" placeholder="class link" name="link4">
+                  <input type="hidden" name="day4" value="Thursday">
+              </td>
+              <td><input class="form-control form-control-lg" type="text" placeholder="period" name="class5"><br>
+                  <input class="form-control form-control-lg" type="text" placeholder="class link" name="link5">
+                  <input type="hidden" name="day5" value="Friday">
+              </td>
+              <td><input class="form-control form-control-lg" type="text" placeholder="period" name="class6"><br>
+                  <input class="form-control form-control-lg" type="text" placeholder="class link" name="link6">
+                  <input type="hidden" name="day6" value="Saturday">
+              </td>
+              
+           
+      
+            </tr>
+          </tbody>
+        </table>
+        <input type="hidden" name="mail" value="<%=detail[0].mail%>">
+          <td><button type="submit" class="btn btn-success">Create</button></td>
+      </form>
+   
+ 
+
+</div>
+<hr>
+<div class="container"  style="overflow-x:auto;">
+    <h2>Created Classes</h2>
+    <p></p>            
+    <table class="table table-bordered">
+          <thead>
+              <tr>
+                <th>Day</th>
+                <th>Class No</th>
+                <th>Class</th>
+                <th>Starttime-Endtime</th>
+                <th>Link</th>
+              </tr>
+             
+            </thead>
+            <tbody>
+                
+               <% detail[0].period.forEach(function(name){%>
+                <tr>
+<form action="/updateperiod" method="post">
+    <td><%=name.day%></td> 
+    <td><%=name.periodnumber%></td>  
+    <td><%=name.period%></td> 
+    <td><%=name.starttime%>-<%=name.endtime%></td> 
+    <td><%=name.link%></td> 
+    <td><button type="submit" class="btn btn-danger" name="periodid" value="<%= name.periodnumber%>">Delete All <%=name.periodnumber%></button></td>
+    <input type="hidden" name="classid" value="<%=detail[0]._id%>">
+</form>
+
+              </tr>
+            <%});%>
+
+  
+  </div>
+
+</body>
+</html>
