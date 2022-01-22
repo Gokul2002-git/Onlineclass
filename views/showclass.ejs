@@ -56,27 +56,42 @@
         </style>
 </head>
 <body>
-<br>
-    
-    <div style="text-align: center;" class="container">
-        <form action="/leaveclass" method="post">
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <a class="navbar-brand" href="#">Online Class</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+  
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item active">
+          <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Class Code:<%=classdetails[0]._id%></a>
+        </li>
+       
+      </ul>
+      <form class="form-inline my-2 my-lg-0" action="/leaveclass" method="post">
+        
+        <button class="btn btn-outline-danger my-2 my-sm-0" type="submit" name="mail" value="<%=mail%>">Leave Class</button>
+        <button class="btn btn-outline-success my-2 my-sm-0" style="margin-left: 50px;"><a href="/" style="text-decoration: none;color: white;">Logout</a></button>
+      </form>
+    </div>
+  </nav><br>
+    <div style="text-align: center;" class="col-md-12" >
             <h2><%=classdetails[0].college%></h2>
-        <h2><%=classdetails[0].year%>-<%=classdetails[0].section%></h2>
+        <h3><%=classdetails[0].year%>-<%=classdetails[0].section%></h3><hr>
     </div>
-    <hr>
-    <div style="text-align: center;" class="container">
-        <form action="/leaveclass" method="post">
-        <button type="submit" class="btn btn-danger" name="mail" value="<%=mail%>" style="margin-right: 100px;">Leave Class</button><button class="btn btn-success" "><a href="/" style="text-decoration: none;color: white;">Logout</a></button>
-    </form>  
-    </div>
-      <hr>
-   <br> <div style="text-align: center;" class="col-md-12" class="container">
+
+   <div style="text-align: center;" class="col-md-12">
     <form action="/showclass" method="post">
-        <button type="submit" class="btn btn-primary btn-circle btn-xl" name="id" value="<%=classdetails[0]._id%>">Join</button>
+        <button type="submit" class="btn btn-outline-success my-2 my-lg-0" name="id" value="<%=classdetails[0]._id%>">Join Now</button>
     </form>
        
-    </div><hr>
-  
+    </div>
+  <br>
     <div class="container" style="overflow-x:auto;">
         <h2>Today Classes</h2>      
         <table class="table table-bordered">

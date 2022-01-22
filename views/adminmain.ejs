@@ -4,25 +4,55 @@
   <title>Admin Main class</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+  <link rel="stylesheet" href= 
+  "https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"> 
+          
+      <script src= 
+  "https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"> 
+      </script> 
+          
+      <script src= 
+  "https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"> 
+      </script> 
+          
+      <script src= 
+  "https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"> 
+      </script> 
 </head>
 <body>
+  
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <a class="navbar-brand" href="#">Online Class</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item active">
+        <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#">Class Code:<%=detail[0]._id%></a>
+      </li>
+     
+    </ul>
+    <form class="form-inline my-2 my-lg-0" action="/deleteclass" method="post">
+        <button class="btn btn-outline-danger my-2 my-sm-0" type="submit" style="margin-right: 100px;">Delete Class</button>
+          <button type="submit" class="btn btn-outline-success my-2 my-sm-0" ><a href="/adminlogin" style="text-decoration: none;color: white;">Logout</a></button>
+      
+          <input type="hidden" name="deleteid" value="<%=detail[0]._id%>">
+          <input type="hidden" name="mailid" value="<%=detail[0].mail%>">
+      </form>
+  </div>
+</nav><br>
   <div class="col-md-12" style="text-align: center;">
     <h2 >Your Class Code</h2>
-      <h3><%=detail[0]._id%></h3>
+      <h4><%=detail[0]._id%></h4>
       <hr>
   </div>
   
-<div class="col-md-12" style="text-align: center;">
-    <form action="/deleteclass" method="post">
-        <button type="submit" class="btn btn-success" style="margin-right: 100px;"><a href="/adminlogin" style="text-decoration: none;color: white;">Logout</a></button>
-        <button class="btn btn-danger" type="submit">Delete Class</button><hr>
-        <input type="hidden" name="deleteid" value="<%=detail[0]._id%>">
-        <input type="hidden" name="mailid" value="<%=detail[0].mail%>">
-    </form>
-</div>
+
 
 <div class="container" style="overflow-x:auto;">
   <h2>Create Class</h2>
@@ -45,7 +75,7 @@
             <tr>
       
               <td>
-                <select class="form-control form-control-lg" name="class">
+                <select class="form-control form-control" name="class">
                     <option>Period 1</option>
                     <option>Peroid 2</option>
                     <option>Peroid 3</option>
@@ -58,32 +88,32 @@
                     <option>Period 10</option>
                     
                   </select><hr>
-                <input class="form-control form-control-lg" type="text" placeholder="starttime" name="starttime"><br>
-                <input class="form-control form-control-lg" type="text" placeholder="endtime" name="endtime">
+                <input class="form-control form-control" type="text" placeholder="starttime" name="starttime"><br>
+                <input class="form-control form-control" type="text" placeholder="endtime" name="endtime">
               </td>
              
-              <td><input class="form-control form-control-lg" type="text" placeholder="period" name="class1"><br>
-                  <input class="form-control form-control-lg" type="text" placeholder="class link" name="link1">
+              <td><input class="form-control form-control" type="text" placeholder="period" name="class1"><br>
+                  <input class="form-control form-control" type="text" placeholder="class link" name="link1">
                   <input type="hidden" name="day1" value="Monday">
               </td>
-              <td><input class="form-control form-control-lg" type="text" placeholder="period" name="class2"><br>
-                  <input class="form-control form-control-lg" type="text" placeholder="class link" name="link2">
+              <td><input class="form-control form-control" type="text" placeholder="period" name="class2"><br>
+                  <input class="form-control form-control" type="text" placeholder="class link" name="link2">
                   <input type="hidden" name="day2" value="Tuesday">
               </td>
-              <td><input class="form-control form-control-lg" type="text" placeholder="period"  name="class3"><br>
-                  <input class="form-control form-control-lg" type="text" placeholder="class link" name="link3">
+              <td><input class="form-control form-control" type="text" placeholder="period"  name="class3"><br>
+                  <input class="form-control form-control" type="text" placeholder="class link" name="link3">
                   <input type="hidden" name="day3" value="Wednesday">
               </td>
-              <td><input class="form-control form-control-lg" type="text" placeholder="period" name="class4"><br>
-                  <input class="form-control form-control-lg" type="text" placeholder="class link" name="link4">
+              <td><input class="form-control form-control" type="text" placeholder="period" name="class4"><br>
+                  <input class="form-control form-control" type="text" placeholder="class link" name="link4">
                   <input type="hidden" name="day4" value="Thursday">
               </td>
-              <td><input class="form-control form-control-lg" type="text" placeholder="period" name="class5"><br>
-                  <input class="form-control form-control-lg" type="text" placeholder="class link" name="link5">
+              <td><input class="form-control form-control" type="text" placeholder="period" name="class5"><br>
+                  <input class="form-control form-control" type="text" placeholder="class link" name="link5">
                   <input type="hidden" name="day5" value="Friday">
               </td>
-              <td><input class="form-control form-control-lg" type="text" placeholder="period" name="class6"><br>
-                  <input class="form-control form-control-lg" type="text" placeholder="class link" name="link6">
+              <td><input class="form-control form-control" type="text" placeholder="period" name="class6"><br>
+                  <input class="form-control form-control" type="text" placeholder="class link" name="link6">
                   <input type="hidden" name="day6" value="Saturday">
               </td>
               
@@ -93,7 +123,7 @@
           </tbody>
         </table>
         <input type="hidden" name="mail" value="<%=detail[0].mail%>">
-          <td><button type="submit" class="btn btn-success">Create</button></td>
+          <td><button type="submit" class="btn btn-success">Create</button></td><br><br>
       </form>
    
  
