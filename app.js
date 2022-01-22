@@ -484,11 +484,6 @@ app.post("/addclass",function(req,res)
     });
   
 });
-app.get("/showclass",function(req,res)
-{
-    res.send("succseefully enrolled");
-
-});
 app.post("/showclass",function(req,res)
 {
     var RailWayTime=date.getRailwayTime();
@@ -497,14 +492,11 @@ app.post("/showclass",function(req,res)
     console.log(day);
     const id=req.body.id;
     console.log(id);
-   
-    
-   
+     
     onlineclass.find({_id:id},function(err,founddetail)
     {
 
         var link="nill";
-        var count=0;
         const detail=founddetail[0].period;
         detail.forEach(function(name)
         {
@@ -513,12 +505,9 @@ app.post("/showclass",function(req,res)
 
                 console.log(name.period);
                 console.log(name.link);
-           
-                 link=name.link;
+                link=name.link;
 
             }
-          
-         
             //console.log(count);
         
         });
@@ -528,12 +517,14 @@ app.post("/showclass",function(req,res)
                  res.render("classerror",{error:"Class not Available At this Time"});
              } else{
                // console.log(link);
-                res.redirect(link);
+            res.redirect(link);
              }
         
     });
  
-
+    
+    
+    
 }); 
 app.post("/updateperiod",function(req,res)
 {
