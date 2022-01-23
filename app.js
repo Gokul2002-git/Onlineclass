@@ -455,9 +455,9 @@ app.post("/addclass",function(req,res)
     console.log(code+" "+id);
     onlineclass.find({_id:code},function(err,founddetail)
     {
-        console.log(founddetail.length);
-        console.log(err);
-        if(founddetail.length===0)
+        console.log(founddetail);
+      //  console.log(err);
+        if(err)
         {
             console.log("class not available");
             res.render("enroll",{userid:id});
