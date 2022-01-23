@@ -500,7 +500,7 @@ app.post("/showclass",function(req,res)
         const detail=founddetail[0].period;
         detail.forEach(function(name)
         {
-            if((RailWayTime>name.starttime && RailWayTime<name.endtime) && (name.day=day))
+            if((RailWayTime>=name.starttime && RailWayTime<name.endtime) && (name.day=day))
             {
 
                 console.log(name.period);
