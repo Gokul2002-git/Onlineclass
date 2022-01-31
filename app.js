@@ -1,11 +1,30 @@
+require('dotenv').config();
 const express=require("express");
 const mongoose = require("mongoose");
 const bodyparser=require("body-parser");
 const app=express();
+const session=require("express-session");
+const passport=require("passport");
+const passportlocalmongoose=require("passport-local-mongoose");
+const GoogleStrategy = require('passport-google-oauth20').Strategy;
 const date=require(__dirname +"/date.js");
+const res = require("express/lib/response");
+var cookieParser = require('cookie-parser');
+const findOrCreate=require("mongoose-findorcreate");
+
 app.use(bodyparser.urlencoded({extended:true}));
- app.set("view engine","ejs");
-mongoose.connect("mongodb://19csr044:Gokul2002@cluster0-shard-00-00.dowfo.mongodb.net:27017,cluster0-shard-00-01.dowfo.mongodb.net:27017,cluster0-shard-00-02.dowfo.mongodb.net:27017/onlineClass?ssl=true&replicaSet=atlas-108jkb-shard-0&authSource=admin&retryWrites=true&w=majority")
+app.set("view engine","ejs");
+app.use(cookieParser());
+
+
+app.use(session({
+    secret:"our little secret.",
+    resave:false,
+    saveUninitialized:false
+}));
+app.use(passport.initialize());
+app.use(passport.session());
+
 const periodschema={
     day:String,
     periodnumber:String,
@@ -31,19 +50,187 @@ const newshedulechema={
     period:[periodschema]
 };
 const onlineclass=mongoose.model("class",newshedulechema);
+
+mongoose.connect("mongodb://19csr044:Gokul2002@cluster0-shard-00-00.dowfo.mongodb.net:27017,cluster0-shard-00-01.dowfo.mongodb.net:27017,cluster0-shard-00-02.dowfo.mongodb.net:27017/session?ssl=true&replicaSet=atlas-108jkb-shard-0&authSource=admin&retryWrites=true&w=majority")
+//mongoose.set("useCreateIndex",true);
+const signupschema=new mongoose.Schema({
+    mail:String,
+    password:String,
+    name:String,
+    googleId:String,
+    username:String,
+    mobilenumber:Number,
+    enrolled:String
+});
+signupschema.plugin(passportlocalmongoose);
+signupschema.plugin(findOrCreate);
+const usersignup=mongoose.model("usersignup",signupschema);
+
+passport.use(usersignup.createStrategy());
+passport.serializeUser(usersignup.serializeUser());
+passport.deserializeUser(usersignup.deserializeUser());
+passport.serializeUser(function(usersignup,done){
+    done(null,usersignup._id);
+});
+passport.deserializeUser(function(id,done){
+    usersignup.findById(id,function(err,usersignup){
+        done(err,usersignup);
+    });
+});
+
+//google auth
+passport.use(new GoogleStrategy({
+    clientID:process.env.client_id,
+    clientSecret:process.env.client_secret,
+    callbackURL: "http://localhost:3000/auth/google/secret",
+    userProfileURL:"https://www.googleapis.com/oauth2/v3/userinfo"
+  },
+  function(accessToken, refreshToken, profile,cb) {
+      console.log(profile._json.email);
+      console.log(profile);
+      var enroll="nil";
+      usersignup.find({username:profile._json.email},function(err,found)
+      {
+          if(found.length===0)
+          {
+            console.log("enroll "+enroll);
+          }else{
+              enroll=found[0].enrolled;
+              console.log("enroll "+enroll);
+          }
+          usersignup.findOrCreate({ name:profile._json.name,googleId: profile.id,username:profile._json.email,enrolled:enroll }, function (err, user) {
+            return cb(err, user);
+      });
+
+      
+    }); 
+  }
+));
+
 app.get("/",function(req,res)
 {
     res.render("userlogin",{});
 
 });
-const signupschema={
-    name:String,
-    mail:String,
-    mobilenumber:Number,
-    password:String,
-    enrolled:String
-};
-const usersignup=mongoose.model("usersignup",signupschema);
+app.get('/auth/google',
+  passport.authenticate('google', { scope: ['profile','email'] })
+  );
+
+app.get('/auth/google/secret', 
+  passport.authenticate('google', { failureRedirect: '/' }),
+  function(req, res) {
+  
+    // Successful authentication, redirect home.
+    console.log(req.user.username);
+    res.cookie('mail',req.user.username);
+    res.redirect('/class');
+
+    
+  });
+
+app.get('/class',function(req,res)
+{
+    var day=date.getDay();
+    console.log(day);
+    console.log(req.isAuthenticated());
+    if(req.isAuthenticated()){
+       
+        usersignup.find({username:req.cookies.mail},function(err,founds)
+        {
+            console.log(founds);
+
+    
+        var id=founds[0]._id;
+        var enroll=founds[0].enrolled;
+       console.log(enroll);
+      //  res.render("secret",{});
+          //Cookies that have not been signed
+  console.log('Cookies: ', req.cookies);
+  console.log('Cookies: ', req.cookies.mail);
+//login
+if(enroll==="nil"){
+    res.render("enroll",{userid:id});
+}else{
+    onlineclass.find({_id:enroll},function(err,founddetail)
+    {
+
+        var found=founddetail[0].period;
+        // found.forEach(function(name)
+        // {
+        //     console.log(name.day);
+
+        // });
+       console.log(founddetail.period);
+    res.render("showclass",{classdetails:founddetail,perioddetail:found,today:day,mail:req.cookies.mail});
+   
+    
+    });
+    
+}
+
+
+
+});
+}else{
+        // res.render("secret",{});
+    res.redirect("/");
+    }
+});
+app.post("/signup",function(req,res)
+{
+    usersignup.register({username:req.body.mailid,name:req.body.username,mobilenumber:req.body.mobilenumber,enrolled:"nil"},req.body.password,function(err,user)
+    {
+        if(err)
+        {
+            console.log(err);
+
+        }else{
+            // passport.authenticate("local")(req,res,function(){
+            //     res.redirect("/secret");
+            // });
+            res.redirect("/");
+
+        }
+
+    });
+
+});
+app.get("/auth",passport.authenticate("local", { failureRedirect: "/class", failureMessage: true }),
+  function(req, res) {
+
+    res.redirect('/class');
+  });
+
+app.post("/login",function(req1,res1)
+{
+    const user=new usersignup({
+        username:req1.body.mail,
+        password:req1.body.password
+    });
+    req1.login(user,function(err)
+    {
+        if(err)
+        {
+            console.log(err);
+        }else{
+          res1.cookie('mail',req1.body.mail);
+          res1.redirect("/auth");
+//            passport.authenticate('local', { failureRedirect: '/secret', failureMessage: true })(req1,res1,function() {      
+//     res1.redirect('/secret');
+//   });
+}
+});
+});
+
+app.get("/logout",function(req,res)
+{
+    req.logout();
+    res.redirect("/");
+
+});
+
+
+
 const adminsignupschema={
     name:String,
     mail:String,
@@ -52,92 +239,9 @@ const adminsignupschema={
     enrolled:String
 };
 const adminsignup=mongoose.model("adminsignup",adminsignupschema);
-app.post("/signup",function(req,res)
-{
-    const username=req.body.username;
-    const password=req.body.password;
-    const mail=req.body.mailid;
-    const mobilenumber=req.body.mobilenumber;
-   // console.log(username+" "+password+""+mail+""+mobilenumber);
-    
-    const signup=new usersignup({
-        name:username,
-        mail:mail,
-        mobilenumber:mobilenumber,
-        password:password,
-        enrolled:"nil"
-
-    });
-    usersignup.find({mail:mail},function(err,found)
-    {
-        if(found.length===0)
-        {
-            signup.save();
-            res.redirect("/");
-        }else{
-            res.render("error",{error:"User Already Exist! Use New Mail Id"});
-        }
 
 
-    });
 
-});
-app.post("/login",function(req,res)
-{
-    var day=date.getDay();
-        console.log(day);
-    const uname=req.body.mail;
-     const password=req.body.password;
-    console.log(uname);
-    console.log(password);
-    usersignup.find({mail:uname},function(err,found)
-    {
-       console.log(err);
-      if(found.length===0)
-      {
-        res.render("error",{error:"User Not Found?Sign Up"});
-      }
-      else{
-        // var RailWayTime=date.getRailwayTime();
-        // console.log(RailWayTime);
-        
-          var orgpassword=found[0].password;
-          var id=found[0]._id;
-          var enroll=found[0].enrolled;
-         console.log(enroll);
-        if(orgpassword===password)
-        {
-            if(enroll==="nil"){
-                res.render("enroll",{userid:id});
-            }else{
-                onlineclass.find({_id:enroll},function(err,founddetail)
-                {
-
-                    var found=founddetail[0].period;
-                    // found.forEach(function(name)
-                    // {
-                    //     console.log(name.day);
-    
-                    // });
-                   console.log(founddetail.period);
-                res.render("showclass",{classdetails:founddetail,perioddetail:found,today:day,mail:uname});
-               
-                
-                });
-            }
-
-           
-        }
-        else{
-            res.render("error",{error:"Password Wrong"});
-        }
-      }
-      
-
-    });
-  
-
-});
 app.get("/adminlogin",function(req,res)
 {
     res.render("adminlogin",{});
@@ -500,7 +604,7 @@ app.post("/showclass",function(req,res)
         const detail=founddetail[0].period;
         detail.forEach(function(name)
         {
-            if((RailWayTime>=name.starttime && RailWayTime<name.endtime) && (name.day=day))
+            if((RailWayTime>=name.starttime && RailWayTime<name.endtime) && (name.day===day))
             {
 
                 console.log(name.period);
@@ -590,7 +694,7 @@ app.post("/leaveclass",function(req,res)
 {
     const mail=req.body.mail;
     console.log("leave "+mail);
-    usersignup.updateOne({mail:mail},{enrolled:"nil"},function(err)
+    usersignup.updateOne({username:mail},{enrolled:"nil"},function(err)
     {
 
     });
